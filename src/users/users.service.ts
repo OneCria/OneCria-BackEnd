@@ -1,39 +1,46 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './entities/user';
-import { InjectModel } from '@nestjs/mongoose'
-import { Model } from 'mongoose'
+import { InjectConnection } from 'nest-knexjs';
+import { Knex } from 'knex';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
+  constructor(@InjectConnection() private readonly knex: Knex) {}
 
-  // async login(user: User) {
-  //   const task = this.userModel.findOne({ name: user.name });
-  //   if(!task) {
-  //     console.log("tarias")
-  //   }
-  //   return {task};
-  // }
-
-  async create(user: User) {
-    const createdUser = new this.userModel(user);
-    return await createdUser.save();
+  async create(createUserDto: CreateUserDto) {
+    const User = await this.knex('users')
+    .insert(createUserDto)
+    .returning('*');
+    return User;
   }
 
   async findAll() {
-    const users = await this.userModel.find().exec(); 
-    return {users}
+    const User = await this.knex('users')
+    .returning('*'); 
+    return User
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} user`;
+    const User = this.knex('users')
+    .where({ id })
+    .returning('*');
+    return User;
   }
 
-  update(id: number, User: User) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const User = await this.knex('users')
+    .where({ id })
+    .insert(updateUserDto)
+    .returning('*');
+    return User;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    const User = await this.knex('events')
+    .where({ id })
+    .delete()
+    .returning('*');
+    return User;
   }
 }

@@ -1,6 +1,4 @@
-import { Document } from "mongoose";
-
-export class User extends Document {
+export class User {
     name: String;
     email: String;
     password: String;
