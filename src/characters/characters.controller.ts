@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { CharactersService } from './characters.service';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
@@ -14,8 +14,13 @@ export class CharactersController {
   }
 
   @Get()
-  findAll(@Param(':id') user:string) {
-    return this.charactersService.findAll(user);
+  findAll(@Query('user') user:string) {
+    return this.charactersService.findAll(+user);
+  }
+
+  @Get('options')
+  findAllOptions(@Param('options') options:string) {
+    return this.charactersService.findAllOptions();
   }
 
   @Patch(':id')

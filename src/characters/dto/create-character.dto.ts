@@ -1,6 +1,10 @@
-import { IsNumber, IsString } from "class-validator";
+import { IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateCharacterDto {
+  @IsString()
+  name: string;
+  @IsNumber()
+  user_id: number;
   @IsString()
   race: string;
   @IsString()
@@ -10,6 +14,7 @@ export class CreateCharacterDto {
   @IsNumber()
   level: number;
   @IsString()
+  @IsOptional()
   akuma: string;
   @IsNumber()
   life: number;
@@ -17,6 +22,8 @@ export class CreateCharacterDto {
   currentlife: number;
 
   constructor(
+    name: string,
+    user_id: number,
     race: string,
     classe: string,
     career: string,
@@ -25,6 +32,8 @@ export class CreateCharacterDto {
     life: number,
     currentlife: number
   ) {
+    this.name = name,
+    this.user_id = user_id;
     this.race = race;
     this.class = classe;
     this.career = career;

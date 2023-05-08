@@ -1,4 +1,6 @@
 export class Character {
+    name: string;
+    user_id: number;
     race: string;
     class: string;
     career: string;

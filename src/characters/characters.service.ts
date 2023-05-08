@@ -7,19 +7,52 @@ import { CharacterRepository } from './characters.repository';
 export class CharactersService {
   constructor(private readonly characterRepository: CharacterRepository) {}
 
-  create(createCharacterDto: CreateCharacterDto, id: number) {
-    return this.characterRepository.create(createCharacterDto, id);
+  create(createCharacterDto: CreateCharacterDto, user: number) {
+    return this.characterRepository.create(createCharacterDto, user);
   }
 
-  findAll(id: string) {
-    return this.characterRepository.findAll(id);
+  findAll(user: number) {
+    return this.characterRepository.findAll(user);
+  }
+  findAllOptions(){
+    const data = {
+      races:[
+        "Anão",
+        "Celestiai",
+        "Gigante",
+        "Homem-Peixe",
+        "Humano",
+        "Kuja",
+        "Lunariano",
+        "Meio Homem-Peixe",
+        "Mink",
+        "Sireno",
+      ],
+      classes: [
+        "Atirador",
+        "Carateca Homem-Peixe",
+        "Ciborgue",
+        "Guerreiro-Oni",
+        "Guerrilheiro",
+        "Lutador",
+        "Ninja",
+        "Okama Kenpo",
+        "Usuário de Rokushiki",
+      ],
+      careers: [
+        "Navegador",
+        "Cientista",
+        "Combatente"
+      ]
+    }
+    return data
   }
 
-  update(id: number, updateCharacterDto: UpdateCharacterDto) {
-    return this.characterRepository.update(updateCharacterDto, id);
+  update(user: number, updateCharacterDto: UpdateCharacterDto) {
+    return this.characterRepository.update(updateCharacterDto, user);
   }
 
-  remove(id: number) {
-    return this.characterRepository.delete(id);
+  remove(user: number) {
+    return this.characterRepository.delete(user);
   }
 }

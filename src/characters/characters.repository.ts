@@ -8,16 +8,16 @@ import { UpdateCharacterDto } from './dto/update-character.dto';
 export class CharacterRepository {
   constructor(@InjectConnection() private readonly knex: Knex) {}
 
-  public async findAll(id: string): Promise<any> {
+  public async findAll(user_id: number): Promise<any> {
     const Character = await this.knex('public.characters')
       .select('*')
-      .where({ id });
+      .where({ user_id });
     return Character;
   }
   public async create(body: CreateCharacterDto, id: number): Promise<any> {
+    console.log(body)
     const Character = await this.knex('public.characters')
       .insert(body)
-      .where({ id })
       .returning('*');
     return Character;
   }
