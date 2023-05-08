@@ -2,8 +2,8 @@ export class Character {
     race: string;
     class: string;
     career: string;
-    level: string;
-    akuma: boolean;
+    level: number;
+    akuma: string;
     life: number;
     currentlife: number;
 }
