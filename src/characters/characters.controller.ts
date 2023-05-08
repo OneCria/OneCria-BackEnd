@@ -8,18 +8,14 @@ export class CharactersController {
   constructor(private readonly charactersService: CharactersService) {}
 
   @Post()
-  create(@Body() createCharacterDto: CreateCharacterDto) {
-    return this.charactersService.create(createCharacterDto);
+  create(@Body() createCharacterDto: CreateCharacterDto,
+  @Param(':id') user:string) {
+    return this.charactersService.create(createCharacterDto, +user);
   }
 
   @Get()
-  findAll() {
-    return this.charactersService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.charactersService.findOne(+id);
+  findAll(@Param(':id') user:string) {
+    return this.charactersService.findAll(user);
   }
 
   @Patch(':id')

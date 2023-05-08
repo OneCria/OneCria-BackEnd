@@ -1,26 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
+import { CharacterRepository } from './characters.repository';
 
 @Injectable()
 export class CharactersService {
-  create(createCharacterDto: CreateCharacterDto) {
-    return 'This action adds a new character';
+  constructor(private readonly characterRepository: CharacterRepository) {}
+
+  create(createCharacterDto: CreateCharacterDto, id: number) {
+    return this.characterRepository.create(createCharacterDto, id);
   }
 
-  findAll() {
-    return `This action returns all characters`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} character`;
+  findAll(id: string) {
+    return this.characterRepository.findAll(id);
   }
 
   update(id: number, updateCharacterDto: UpdateCharacterDto) {
-    return `This action updates a #${id} character`;
+    return this.characterRepository.update(updateCharacterDto, id);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} character`;
+    return this.characterRepository.delete(id);
   }
 }
