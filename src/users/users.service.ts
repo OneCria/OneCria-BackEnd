@@ -45,7 +45,7 @@ export class UsersService {
   }
 
   async remove(id: number) {
-    const User = await this.knex('events')
+    const User = await this.knex('users')
     .where({ id })
     .delete()
     .returning('*');

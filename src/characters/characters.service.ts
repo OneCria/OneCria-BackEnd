@@ -30,14 +30,14 @@ export class CharactersService {
       ],
       classes: [
         "Atirador",
-        "Carateca Homem-Peixe",
+        "Carateca_Homem_Peixe",
         "Ciborgue",
-        "Guerreiro-Oni",
+        "Guerreiro_Oni",
         "Guerrilheiro",
         "Lutador",
         "Ninja",
         "Okama Kenpo",
-        "Usuário de Rokushiki",
+        "Rokushiki",
       ],
       careers: [
         "Navegador",
