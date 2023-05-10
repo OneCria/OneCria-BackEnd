@@ -28,6 +28,14 @@ export class UsersService {
     return User;
   }
 
+  findOneByUser(username: string) {
+    console.log(username)
+    const User = this.knex('users')
+      .where({ name: username })
+      .returning('*');
+    return User;
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto) {
     const User = await this.knex('users')
     .where({ id })
