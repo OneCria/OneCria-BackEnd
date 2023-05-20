@@ -1,31 +1,50 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { CharactersService } from './characters.service';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { Helper } from 'src/shared/helper';
 
 @Controller('characters')
 export class CharactersController {
-  constructor(private readonly charactersService: CharactersService) {}
+  constructor(private readonly charactersService: CharactersService) { }
 
   @Post()
   create(@Body() createCharacterDto: CreateCharacterDto,
-  @Param(':id') user:string) {
+    @Param(':id') user: string) {
     return this.charactersService.create(createCharacterDto, +user);
   }
 
   @Get()
-  findAll(@Query('user') user:string) {
+  findAll(@Query('user') user: string) {
     return this.charactersService.findAll(+user);
   }
 
   @Get('options')
-  findAllOptions(@Param('options') options:string) {
+  findAllOptions(@Param('options') options: string) {
     return this.charactersService.findAllOptions();
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCharacterDto: UpdateCharacterDto) {
     return this.charactersService.update(+id, updateCharacterDto);
+  }
+
+  @Patch(':id/token')
+  @UseInterceptors(
+    FileInterceptor('token', {
+      storage: diskStorage({
+      destination: './uploads/token',
+      filename: Helper.customFileName
+    })
+  }))
+
+  updateToken(
+    @Param('id') id: string,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.charactersService.updateToken(id, file.path)
   }
 
   @Delete(':id')

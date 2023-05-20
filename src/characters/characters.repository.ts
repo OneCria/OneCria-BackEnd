@@ -14,6 +14,14 @@ export class CharacterRepository {
       .where({ user_id });
     return Character;
   }
+
+  public async findOne(id: number): Promise<any> {
+    const Character = await this.knex('public.characters')
+      .select('*')
+      .where({ id });
+    return Character;
+  }
+
   public async create(body: CreateCharacterDto, id: number): Promise<any> {
     console.log(body)
     const Character = await this.knex('public.characters')
@@ -22,11 +30,12 @@ export class CharacterRepository {
     return Character;
   }
 
-  public async update(body: UpdateCharacterDto, id: number): Promise<any> {
+  public async update(id: number, body: UpdateCharacterDto, ): Promise<any> {
     const Character = await this.knex('public.characters')
       .update(body)
       .where({ id })
       .returning('*');
+    return Character
   }
   public async delete(id: number): Promise<any> {
     const Character = await this.knex('public.characters')

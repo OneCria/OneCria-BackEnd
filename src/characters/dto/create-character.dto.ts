@@ -20,6 +20,9 @@ export class CreateCharacterDto {
   life: number;
   @IsNumber()
   currentlife: number;
+  @IsString()
+  @IsOptional()
+  token: string;
 
   constructor(
     name: string,
@@ -30,7 +33,8 @@ export class CreateCharacterDto {
     level: number,
     akuma: string,
     life: number,
-    currentlife: number
+    currentlife: number,
+    token: string
   ) {
     this.name = name,
     this.user_id = user_id;
@@ -41,5 +45,6 @@ export class CreateCharacterDto {
     this.akuma = akuma;
     this.life = life;
     this.currentlife = currentlife;
+    this.token = token;
   }
 }

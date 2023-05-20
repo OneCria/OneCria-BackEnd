@@ -5,7 +5,7 @@ import { CharacterRepository } from './characters.repository';
 
 @Injectable()
 export class CharactersService {
-  constructor(private readonly characterRepository: CharacterRepository) {}
+  constructor(private readonly characterRepository: CharacterRepository) { }
 
   create(createCharacterDto: CreateCharacterDto, user: number) {
     return this.characterRepository.create(createCharacterDto, user);
@@ -14,9 +14,9 @@ export class CharactersService {
   findAll(user: number) {
     return this.characterRepository.findAll(user);
   }
-  findAllOptions(){
+  findAllOptions() {
     const data = {
-      races:[
+      races: [
         "Anão",
         "Celestiai",
         "Gigante",
@@ -49,10 +49,20 @@ export class CharactersService {
   }
 
   update(user: number, updateCharacterDto: UpdateCharacterDto) {
-    return this.characterRepository.update(updateCharacterDto, user);
+    return this.characterRepository.update(user, updateCharacterDto);
   }
 
   remove(user: number) {
     return this.characterRepository.delete(user);
+  }
+
+  async updateToken(id: string, file: string) {
+    const charToken = await this.characterRepository.findOne(+id);
+    await this.characterRepository.update(+id, { token: file.replace(/[\\"]/g, '/') });
+
+
+    const character = await this.characterRepository.findOne(+id);
+
+    return character;
   }
 }
