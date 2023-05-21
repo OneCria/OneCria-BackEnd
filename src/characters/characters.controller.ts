@@ -35,15 +35,17 @@ export class CharactersController {
   @UseInterceptors(
     FileInterceptor('token', {
       storage: diskStorage({
-      destination: './uploads/token',
-      filename: Helper.customFileName
-    })
-  }))
+        destination: './uploads/token',
+        filename: Helper.customFileName
+      })
+    }))
 
-  updateToken(
+  async updateToken(
     @Param('id') id: string,
     @UploadedFile() file: Express.Multer.File,
   ) {
+    console.log('FAIOU', file.path.replace(/[\\"]/g, '/'))
+    
     return this.charactersService.updateToken(id, file.path)
   }
 
