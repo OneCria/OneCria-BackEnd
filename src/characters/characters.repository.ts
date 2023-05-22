@@ -5,6 +5,20 @@ import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
 import { UpdateCharacterDto } from './dto/update-character.dto';
 
+<<<<<<< HEAD
+=======
+
+import { google } from 'googleapis';
+import path from 'path';
+import { Stream } from 'stream';
+
+// const KEYFILEPATH = path?.join(__dirname + "credentials.json");
+
+
+const img = "uploads/token/2a9f95b5cd7b12e99535d9be58410928e.jpg"
+
+
+>>>>>>> 69e8c9b90b5daa64ecec59f7d80e17bd00472edf
 @Injectable()
 export class CharacterRepository {
   constructor(@InjectConnection() private readonly knex: Knex) {}
@@ -32,11 +46,12 @@ export class CharacterRepository {
   }
 
   public async update(id: number, body: UpdateCharacterDto, ): Promise<any> {
-    console.log('AAAAAAAAAAAAAAAAAAAAAAAAA', body.token)
+    //console.log('AAAAAAAAAAAAAAAAAAAAAAAAA', body.token)
     const Character = await this.knex('public.characters')
       .update(body)
       .where({ id })
       .returning('*');
+      //await uploadFile(body.token)
     return Character
   }
   public async delete(id: number): Promise<any> {
