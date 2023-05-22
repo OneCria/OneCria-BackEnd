@@ -58,7 +58,7 @@ export class CharactersService {
 
   async updateToken(id: string, file: string) {
     const charToken = await this.characterRepository.findOne(+id);
-    await this.characterRepository.update(+id, { token: file.replace(/[\\"]/g, '/') });
+    await this.characterRepository.update(+id, { token: file?.replace(/[\\"]/g, '/') });
 
 
     const character = await this.characterRepository.findOne(+id);
